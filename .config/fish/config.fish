@@ -24,6 +24,7 @@ if status is-interactive
   alias lt="ls --tree"
   alias ls="lsd"
   alias reload="source ~/.config/fish/config.fish"
+  alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
   set --universal tide_right_prompt_items status cmd_duration context jobs node virtual_env php go
   set -a tide_right_prompt_items kubectl
