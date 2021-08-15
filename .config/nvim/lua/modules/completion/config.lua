@@ -8,12 +8,46 @@ function config.golang()
   require'go'.setup{}
 end
 
+function config.lspkind() 
+  require'lspkind'.init({
+    with_text = false,
+    symbol_map = {
+      Text = "",
+      Method = "",
+      Function = "",
+      Constructor = "",
+      Field = "ﰠ",
+      Variable = "",
+      Class = "ﴯ",
+      Interface = "",
+      Module = "",
+      Property = "ﰠ",
+      Unit = "塞",
+      Value = "",
+      Enum = "",
+      Keyword = "",
+      Snippet = "",
+      Color = "",
+      File = "",
+      Reference = "",
+      Folder = "",
+      EnumMember = "",
+      Constant = "",
+      Struct = "פּ",
+      Event = "",
+      Operator = "",
+      TypeParameter = ""
+    },
+  })
+end
+
 function config.nvim_compe()
   require'compe'.setup {
     enabled = true;
     debug = false;
     min_length = 1;
-    preselect = 'always';
+    preselect = 'enabled';
+    documentation = false;
     allow_prefix_unmatch = false;
     map_cr = true; --  map <CR> on insert mode
     map_complete = true; -- it will auto insert `(` after select function or method item
@@ -36,6 +70,8 @@ end
 -- enderror_sign
 
 function config.telescope()
+  local icons = require "nvim-nonicons"
+
   if not packer_plugins['plenary.nvim'].loaded then
     vim.cmd [[packadd plenary.nvim]] vim.cmd [[packadd popup.nvim]]
     vim.cmd [[packadd telescope-fzy-native.nvim]]
@@ -43,9 +79,9 @@ function config.telescope()
 
   require('telescope').setup {
     defaults = {
-      -- prompt_prefix = '🔭 ',
+      prompt_prefix = icons.get('telescope') .. " ",
       -- prompt_position = 'top',
-      -- selection_caret = " ",
+      selection_caret = icons.get("arrow-right") .. " ",
       sorting_strategy = 'ascending',
       -- results_width = 0.6,
       -- preview_width = 0.6,

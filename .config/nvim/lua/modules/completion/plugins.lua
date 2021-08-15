@@ -10,6 +10,11 @@ completion['glepnir/lspsaga.nvim'] = {
   cmd = 'Lspsaga',
 }
 
+completion['onsails/lspkind-nvim'] = {
+  event = 'InsertEnter',
+  config = conf.lspkind
+}
+
 completion['hrsh7th/nvim-compe'] = {
   event = 'InsertEnter',
   config = conf.nvim_compe,

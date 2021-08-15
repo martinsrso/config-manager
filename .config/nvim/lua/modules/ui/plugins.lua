@@ -1,18 +1,18 @@
 local ui = {}
 local conf = require('modules.ui.config')
 
-ui['projekt0n/github-nvim-theme'] = {
+--[[ ui['projekt0n/github-nvim-theme'] = {
   config = conf.githubtheme
-}
+} ]]
 
 --[[ ui['ful1e5/onedark.nvim'] = {
   config = conf.onedark
 } ]]
 
---[[ ui['briones-gabriel/darcula-solid.nvim'] = {
+ui['briones-gabriel/darcula-solid.nvim'] = {
   config = conf.darcula,
   requires = 'rktjmp/lush.nvim'
-} ]]
+}
 
 ui['kyazdani42/nvim-tree.lua'] = {
   cmd = {'NvimTreeToggle','NvimTreeOpen'},
@@ -53,5 +53,9 @@ ui['hoob3rt/lualine.nvim'] = {
 --   requires = {'nvim-lua/plenary.nvim'},
 --   config = conf.expressline
 -- }
+
+ui['yamatsum/nvim-nonicons'] = {
+  requires = {'kyazdani42/nvim-web-devicons'}
+}
 
 return ui

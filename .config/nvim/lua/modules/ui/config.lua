@@ -8,7 +8,7 @@ function config.lualine()
   require("lualine").setup {
   options = {
     -- theme = "onedark",
-    theme = "github",
+    -- theme = "darcula-solid",
     -- section_separators = {"", ""},
     section_separators = {" ", " "},
     component_separators = {"", ""},
@@ -37,7 +37,7 @@ function config.lualine()
 
 end
 
-function config.githubtheme()
+--[[ function config.githubtheme()
   require("github-theme").setup({
     -- themeStyle = "dark",
     themeStyle = "dimmed",
@@ -48,7 +48,7 @@ function config.githubtheme()
     darkFloat = true,
     -- colors = {bg_statusline = "#000000"}
   })
-end
+end ]]
 
 --[[ function config.githubtheme()
   require("onedark").setup({
@@ -63,12 +63,14 @@ end
   })
 end ]]
 
---[[ function config.darcula()
+function config.darcula()
   vim.cmd('colorscheme darcula-solid')
-end ]]
+end
 
 function config.nvim_tree()
   local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+  local icons = require "nvim-nonicons"
+
   -- On Ready Event for Lazy Loading work
   require("nvim-tree.events").on_nvim_tree_ready(
     function()
@@ -76,6 +78,7 @@ function config.nvim_tree()
     end
   )
   vim.g.nvim_tree_follow = 1
+  vim.g.nvim_tree_side = 'right'
   vim.g.nvim_tree_hide_dotfiles = 1
   vim.g.nvim_tree_indent_markers = 1
   vim.g.nvim_tree_bindings = {
@@ -84,15 +87,35 @@ function config.nvim_tree()
     { key = {"i"}, cb = tree_cb("vsplit") },
   }
   vim.g.nvim_tree_icons = {
-    default =  '',
-    symlink =  '',
+    default = icons.get('file'),
+    symlink = icons.get('file-symlink-file'),
+
     git = {
-     unstaged = "✚",
-     staged =  "✚",
-     unmerged =  "≠",
-     renamed =  "≫",
-     untracked = "★",
+      unstaged = icons.get('x'),
+      staged = icons.get('check'),
+      unmerged = icons.get('git-merge'),
+      renamed = icons.get('arrow-right'),
+      untracked = icons.get('square-fill'),
+      deleted = icons.get('diff-removed'),
+      ignored = icons.get('issue-draft')
     },
+
+    folder = {
+      arrow_open = icons.get('chevron-down'),
+      arrow_closed = icons.get('chevron-right'),
+      default = icons.get('file-directory'),
+      open = icons.get('file-directory-outline'),
+      empty = icons.get('browser'),
+      empty_open = icons.get('bug'),
+      symlink = icons.get('file-submodule'),
+      symlink_open = icons.get('file-directory-outline'),
+     },
+     lsp = {
+       hint = icons.get('issue-reopened'),
+       info = icons.get('info'),
+       warning = icons.get('alert'),
+       error = icons.get('x-circle'),
+     }
   }
 end
 
