@@ -9,9 +9,17 @@ local conf = require('modules.ui.config')
   config = conf.onedark
 } ]]
 
-ui['briones-gabriel/darcula-solid.nvim'] = {
+--[[ ui['briones-gabriel/darcula-solid.nvim'] = {
   config = conf.darcula,
   requires = 'rktjmp/lush.nvim'
+} ]]
+
+--[[ ui['shaunsingh/nord.nvim'] = {
+  config = conf.nord
+} ]]
+
+ui['arcticicestudio/nord-vim'] = {
+  config = conf.nord
 }
 
 ui['kyazdani42/nvim-tree.lua'] = {

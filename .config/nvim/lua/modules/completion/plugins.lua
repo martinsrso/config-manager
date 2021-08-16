@@ -1,9 +1,21 @@
 local completion = {}
 local conf = require('modules.completion.config')
 
+completion['ms-jpq/coq_nvim'] = {
+  branch = 'coq',
+  event = 'BufReadPre',
+  run = ':COQdeps',
+  requires = {
+    {'ms-jpq/coq.artifacts', branch = 'artifacts'},
+  }
+}
+
 completion['neovim/nvim-lspconfig'] = {
   event = 'BufReadPre',
   config = conf.nvim_lsp,
+  requires = {
+    {'ms-jpq/coq_nvim', opt = true},
+  }
 }
 
 completion['glepnir/lspsaga.nvim'] = {
@@ -15,10 +27,10 @@ completion['onsails/lspkind-nvim'] = {
   config = conf.lspkind
 }
 
-completion['hrsh7th/nvim-compe'] = {
+--[[ completion['hrsh7th/nvim-compe'] = {
   event = 'InsertEnter',
   config = conf.nvim_compe,
-}
+} ]]
 
 completion['hrsh7th/vim-vsnip'] = {
   event = 'InsertCharPre',
@@ -46,7 +58,7 @@ completion['liuchengxu/vista.vim'] = {
 
 completion['fatih/vim-go'] = {
   ft = 'go',
-  run = ':GoInstallBinaries',
+  -- run = ':GoInstallBinaries',
   -- config = conf.golang,
 }
 

@@ -22,6 +22,7 @@ local def_map = {
   ["n|]b"]         = map_cu('bp'):with_noremap(),
   ["n|[b"]         = map_cu('bn'):with_noremap(),
   ["n|<Leader>bd"] = map_cu('bd'):with_noremap(),
+  ["n|<Leader>cn"] = map_cu('COQnow'):with_noremap(),
   -- ["n|<Leader>cw"]  = map_cu([[silent! keeppatterns %substitute/\s\+$//e]]):with_noremap():with_silent(),
   ["n|<C-h>"]      = map_cmd('<C-w>h'):with_noremap(),
   ["n|<C-l>"]      = map_cmd('<C-w>l'):with_noremap(),

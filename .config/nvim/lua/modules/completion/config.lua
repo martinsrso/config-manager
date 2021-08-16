@@ -41,7 +41,7 @@ function config.lspkind()
   })
 end
 
-function config.nvim_compe()
+--[[ function config.nvim_compe()
   require'compe'.setup {
     enabled = true;
     debug = false;
@@ -63,7 +63,7 @@ function config.nvim_compe()
       snippets_nvim = false;
     };
   }
-end
+end ]]
 
 -- function config.vim_vsnip()
 --   vim.g.vsnip_snippet_dir = os.getenv('HOME') .. '/.config/nvim/snippets'

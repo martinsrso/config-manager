@@ -6,6 +6,10 @@ if not packer_plugins['lspsaga.nvim'].loaded then
   vim.cmd [[packadd lspsaga.nvim]]
 end
 
+if not packer_plugins['coq_nvim'].loaded then
+  vim.cmd [[packadd coq_nvim]]
+end
+
 --[[ if not packer_plugins['nvim-lspconfig'].loaded then
   vim.cmd [[packadd nvim-lspconfig]]
 -- end ]]
@@ -85,7 +89,7 @@ local servers = {
 }
 
 for _,server in ipairs(servers) do
-  lspconfig[server].setup {
-    on_attach = enhance_attach
+  lspconfig[server].setup{
+    coq.lsp_ensure_capabilities{ on_attach = enhance_attach }
   }
 end
