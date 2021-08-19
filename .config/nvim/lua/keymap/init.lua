@@ -6,12 +6,9 @@ local map_args = bind.map_args
 require('keymap.config')
 
 local plug_map = {
-    -- ["i|<CR>"]       = map_cmd([[compe#confirm(luaeval("require 'nvim-autopairs'.autopairs_cr()"))]]):with_noremap():with_expr():with_nowait(),
+    ["i|<CR>"]       = map_cmd([[compe#confirm(luaeval("require 'nvim-autopairs'.autopairs_cr()"))]]):with_noremap():with_expr():with_nowait(),
     ["i|<TAB>"]      = map_cmd('v:lua.tab_complete()'):with_expr():with_silent(),
     ["i|<S-TAB>"]    = map_cmd('v:lua.s_tab_complete()'):with_silent():with_expr(),
-    -- ["i|<CR>"]       = map_cmd([[compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })]]):with_noremap():with_expr():with_nowait(),
-    -- person keymap
-    -- ["n|mf"]             = map_cr("<cmd>lua require('internal.fsevent').file_event()<CR>"):with_silent():with_nowait():with_noremap();
     ["n|gb"]             = map_cr("BufferLinePick"):with_noremap():with_silent(),
     -- Packer
     ["n|<leader>pu"]     = map_cr("PackerUpdate"):with_silent():with_noremap():with_nowait();
@@ -58,7 +55,7 @@ local plug_map = {
     ["n|<Leader>e"]      = map_cr('NvimTreeToggle'):with_noremap():with_silent(),
     ["n|<Leader>F"]      = map_cr('NvimTreeFindFile'):with_noremap():with_silent(),
     -- Plugin MarkdownPreview
-    ["n|<Leader>om"]     = map_cu('MarkdownPreview'):with_noremap():with_silent(),
+    ["n|<Leader>mp"]     = map_cu('MarkdownPreview'):with_noremap():with_silent(),
     -- Plugin DadbodUI
     -- ["n|<Leader>od"]     = map_cr('DBUIToggle'):with_noremap():with_silent(),
     ["n|<Leader>g"]      = map_cu("LazyGit"):with_noremap():with_silent(),
@@ -69,7 +66,7 @@ local plug_map = {
     -- Files
     ["n|<Leader>ff"]     = map_cu('Telescope find_files'):with_noremap():with_silent(),
     ["n|<Leader>gf"]     = map_cu('Telescope git_files'):with_noremap():with_silent(),
-    ["n|<Leader>rs"]     = map_cu('Telescope grep_string'):with_noremap():with_silent(),
+    ["n|<Leader>rg"]     = map_cu('Telescope grep_string'):with_noremap():with_silent(),
     ["n|<Leader>lr"]     = map_cu('Telescope live_grep'):with_noremap():with_silent(),
     ["n|<Leader>fb"]     = map_cu('Telescope file_browser'):with_noremap():with_silent(),
     -- Vim picker
@@ -88,18 +85,14 @@ local plug_map = {
 
     --[[ ["n|<Leader>fd"]     = map_cu('Telescope dotfiles path='..os.getenv("HOME")..'/.dotfiles'):with_noremap():with_silent(),
     ["n|<Leader>fs"]     = map_cu('Telescope gosource'):with_noremap():with_silent(),
-    ["n|<Leader>fa"]     = map_cu('DashboardFindWord'):with_noremap():with_silent(),
+    ["n|<Leader>fg"]     = map_cu('DashboardFindWord'):with_noremap():with_silent(),
     ["n|<Leader>fh"]     = map_cu('DashboardFindHistory'):with_noremap():with_silent(),
     ["n|<Leader>ff"]     = map_cu('DashboardFindFile'):with_noremap():with_silent(), ]]
     -- Plugin acceleratedjk
-    ["n|j"]              = map_cmd('v:lua.enhance_jk_move("j")'):with_silent():with_expr(),
-    ["n|k"]              = map_cmd('v:lua.enhance_jk_move("k")'):with_silent():with_expr(),
+    -- ["n|j"]              = map_cmd('v:lua.enhance_jk_move("j")'):with_silent():with_expr(),
+    -- ["n|k"]              = map_cmd('v:lua.enhance_jk_move("k")'):with_silent():with_expr(),
     -- Plugin Vista
     ["n|<Leader>v"]      = map_cu('Vista!!'):with_noremap():with_silent(),
-    -- Plugin vim-operator-surround
-    ["n|sa"]             = map_cmd("<Plug>(operator-surround-append)"):with_silent(),
-    ["n|sd"]             = map_cmd("<Plug>(operator-surround-delete)"):with_silent(),
-    ["n|sr"]             = map_cmd("<Plug>(operator-surround-replace)"):with_silent(),
     -- Plugin hrsh7th/vim-eft
     ["n|;"]              = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
     ["x|;"]              = map_cmd("v:lua.enhance_ft_move(';')"):with_expr(),
@@ -109,11 +102,6 @@ local plug_map = {
     ["n|F"]              = map_cmd("v:lua.enhance_ft_move('F')"):with_expr(),
     ["x|F"]              = map_cmd("v:lua.enhance_ft_move('F')"):with_expr(),
     ["o|F"]              = map_cmd("v:lua.enhance_ft_move('F')"):with_expr(),
-    -- Plugin vim_niceblock
-    ["x|I"]              = map_cmd("v:lua.enhance_nice_block('I')"):with_expr(),
-    ["x|gI"]             = map_cmd("v:lua.enhance_nice_block('gI')"):with_expr(),
-    ["x|A"]              = map_cmd("v:lua.enhance_nice_block('A')"):with_expr(),
-};
+}
 
 bind.nvim_load_mapping(plug_map)
-

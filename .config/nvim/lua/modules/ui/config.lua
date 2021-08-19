@@ -1,77 +1,5 @@
 local config = {}
 
-function config.galaxyline()
-  require('modules.ui.eviline')
-end
-
-function config.lualine()
-  require("lualine").setup {
-  options = {
-    -- theme = "onedark",
-    theme = "nord",
-    -- section_separators = {"", ""},
-    section_separators = {" ", " "},
-    component_separators = {"", ""},
-    icons_enabled = true
-  },
-  sections = {
-    lualine_a = {{"mode", upper = true}},
-    lualine_b = {{"branch", icon = ""}},
-    lualine_c = {{"filename", file_status = true}},
-    lualine_x = {"encoding", "fileformat", "filetype", require'lsp-status'.status},
-    lualine_y = {"progress"},
-    lualine_z = {"location"}
--- require'lsp-status'.status, 
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {"filename"},
-    lualine_x = {"location"},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  extensions = {}
-}
-
-end
-
---[[ function config.githubtheme()
-  require("github-theme").setup({
-    -- themeStyle = "dark",
-    themeStyle = "dimmed",
-    -- themeStyle = "light",
-    -- hideInactiveStatusline = true,
-    darkSidebar = true,
-    commentStyle = 'italic',
-    darkFloat = true,
-    -- colors = {bg_statusline = "#000000"}
-  })
-end ]]
-
---[[ function config.githubtheme()
-  require("onedark").setup({
-    -- themeStyle = "dark",
-    -- themeStyle = "dimmed",
-    -- themeStyle = "light",
-    hideInactiveStatusline = true,
-    darkSidebar = true,
-    commentStyle = 'italic',
-    darkFloat = true,
-    colors = {bg_statusline = "#000000"}
-  })
-end ]]
-
-function config.nord()
-  vim.cmd('colorscheme nord')
-  --[[ vim.g.nord_contrast = true
-  vim.g.nord_borders = true
-  vim.g.nord_disable_background = true
-  vim.g.nord_italic = true
-  require("nord").set() ]]
-end
-
 function config.nvim_tree()
   local tree_cb = require'nvim-tree.config'.nvim_tree_callback
   local icons = require "nvim-nonicons"
@@ -80,48 +8,141 @@ function config.nvim_tree()
   require("nvim-tree.events").on_nvim_tree_ready(
     function()
       vim.cmd("NvimTreeRefresh")
-    end
-  )
-  vim.g.nvim_tree_follow = 1
-  vim.g.nvim_tree_side = 'right'
-  vim.g.nvim_tree_hide_dotfiles = 1
-  vim.g.nvim_tree_indent_markers = 1
-  vim.g.nvim_tree_bindings = {
-    { key = {"<CR>", "l", "o", "<2-LeftMouse>"}, cb = tree_cb("edit") },
-    { key = {"s"}, cb = tree_cb("split") },
-    { key = {"i"}, cb = tree_cb("vsplit") },
-  }
-  vim.g.nvim_tree_icons = {
-    default = icons.get('file'),
-    symlink = icons.get('file-symlink-file'),
+    end)
+    vim.g.nvim_tree_follow = 1
+    -- vim.g.nvim_tree_gitignore = 1
+    vim.g.nvim_tree_ignore = {'.git', 'vendor', '.cache'}
+    vim.g.nvim_tree_side = 'right'
+    vim.g.nvim_tree_hide_dotfiles = 1
+    vim.g.nvim_tree_indent_markers = 1
+    vim.g.nvim_tree_special_files = { ['README.md'] = 1, ['Makefile']= 1, ['MAKEFILE']= 1 }
+    vim.g.nvim_tree_bindings = {
+      { key = {"<CR>", "l", "o", "<2-LeftMouse>"}, cb = tree_cb("edit") }, { key = {"s"}, cb = tree_cb("split") }, { key = {"i"}, cb = tree_cb("vsplit") }, }
+    vim.g.nvim_tree_window_picker_exclude = {
+        filetype = {
+            'packer',
+            'qf'
+        },
+        buftype = {
+            'terminal'
+        }
+    }
 
-    git = {
-      unstaged = icons.get('x'),
-      staged = icons.get('check'),
-      unmerged = icons.get('git-merge'),
-      renamed = icons.get('arrow-right'),
-      untracked = icons.get('square-fill'),
-      deleted = icons.get('diff-removed'),
-      ignored = icons.get('issue-draft')
+    vim.g.nvim_tree_icons = {
+      default = icons.get('file'),
+      symlink = icons.get('file-symlink-file'),
+
+      git = {
+        unstaged = icons.get('x'),
+        staged = icons.get('check'),
+        unmerged = icons.get('git-merge'), renamed = icons.get('arrow-right'),
+        untracked = icons.get('square-fill'),
+        deleted = icons.get('diff-removed'),
+        ignored = icons.get('issue-draft')
+      },
+
+      folder = {
+        arrow_open = icons.get('chevron-down'),
+        arrow_closed = icons.get('chevron-right'),
+        default = icons.get('file-directory'),
+        open = icons.get('file-directory-outline'),
+        empty = icons.get('browser'),
+        empty_open = icons.get('bug'),
+        symlink = icons.get('file-submodule'),
+        symlink_open = icons.get('file-directory-outline'),
+      },
+      lsp = {
+        hint = icons.get('issue-reopened'),
+        info = icons.get('info'),
+        warning = icons.get('alert'),
+        error = icons.get('x-circle'),
+      }
+  }
+end
+
+function config.github_theme()
+  require("github-theme").setup({
+    themeStyle = "dark",
+    sidebars = {"qf", "vista_kind", "terminal", "packer"},
+    darkSidebar = true,
+    commentStyle = 'italic',
+    darkFloat = true,
+    colors = {bg_statusline = "#000000"}
+  })
+end
+
+function config.nvim_bufferline()
+  require('bufferline').setup{
+    options = {
+      -- modified_icon = '✥',
+      buffer_close_icon = '',
+      mappings = true,
+      always_show_bufferline = false,
+    }
+  }
+end
+
+function config.lualine()
+  require("lualine").setup {
+    options = {
+      theme = "github",
+      section_separators = {" ", " "},
+      component_separators = {"", ""},
+      icons_enabled = true
     },
-
-    folder = {
-      arrow_open = icons.get('chevron-down'),
-      arrow_closed = icons.get('chevron-right'),
-      default = icons.get('file-directory'),
-      open = icons.get('file-directory-outline'),
-      empty = icons.get('browser'),
-      empty_open = icons.get('bug'),
-      symlink = icons.get('file-submodule'),
-      symlink_open = icons.get('file-directory-outline'),
-     },
-     lsp = {
-       hint = icons.get('issue-reopened'),
-       info = icons.get('info'),
-       warning = icons.get('alert'),
-       error = icons.get('x-circle'),
-     }
+    sections = {
+      lualine_a = {{"mode", upper = true}},
+      lualine_b = {{"branch", icon = ""}},
+      lualine_c = {{"filename", file_status = true}},
+      lualine_x = {"encoding", "fileformat", "filetype", require'lsp-status'.status},
+      lualine_y = {"progress"},
+      lualine_z = {"location"}
+  -- require'lsp-status'.status, 
+    },
+    inactive_sections = {
+      lualine_a = {},
+      lualine_b = {},
+      lualine_c = {"filename"},
+      lualine_x = {"location"},
+      lualine_y = {},
+      lualine_z = {}
+    },
+    tabline = {},
+    extensions = {}
   }
+end
+
+function config.indent_blakline()
+  vim.g.indent_blankline_char = "│"
+  vim.g.indent_blankline_show_first_indent_level = true
+  vim.g.indent_blankline_show_end_of_line = true
+  vim.g.indent_blankline_filetype_exclude = {
+    "startify",
+    "dashboard",
+    "dotooagenda",
+    "log",
+    "fugitive",
+    "gitcommit",
+    "packer",
+    "vimwiki",
+    "markdown",
+    "json",
+    "txt",
+    "vista",
+    "help",
+    "todoist",
+    "NvimTree",
+    "peekaboo",
+    "git",
+    "TelescopePrompt",
+    "undotree",
+    "flutterToolsOutline",
+    "" -- for all buffers without a file type
+  }
+  -- vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile", "packer", "NvimTree"}
+  vim.g.indent_blankline_use_treesitter = true
+  vim.g.indent_blankline_show_current_context = true
+  vim.cmd('autocmd CursorMoved * IndentBlanklineRefresh')
 end
 
 function config.gitsigns()
@@ -137,86 +158,25 @@ function config.gitsigns()
       changedelete = {hl = 'GitGutterChange', text = '▎'},
     },
     keymaps = {
-       -- Default keymap options
-       noremap = true,
-       buffer = true,
+      -- Default keymap options
+      noremap = true,
+      buffer = true,
 
-       ['n ]g'] = { expr = true, "&diff ? ']g' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'"},
-       ['n [g'] = { expr = true, "&diff ? '[g' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'"},
+      ['n ]g'] = { expr = true, "&diff ? ']g' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'"},
+      ['n [g'] = { expr = true, "&diff ? '[g' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'"},
 
-       ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-       ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-       ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-       ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-       ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
+      ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
+      ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
+      ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
+      ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
+      ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line()<CR>',
 
-       -- Text objects
-       ['o ih'] = ':<C-U>lua require"gitsigns".text_object()<CR>',
-       ['x ih'] = ':<C-U>lua require"gitsigns".text_object()<CR>'
-     },
-  }
-end
-
-function config.indent_blakline()
-  vim.g.indent_blankline_char = "│"
-  vim.g.indent_blankline_show_first_indent_level = true
-  vim.g.indent_blankline_show_end_of_line = true
-  vim.g.indent_blankline_filetype_exclude = {
-     "startify",
-     "dashboard",
-     "dotooagenda",
-     "log",
-     "fugitive",
-     "gitcommit",
-     "packer",
-     "vimwiki",
-     "markdown",
-     "json",
-     "txt",
-     "vista",
-     "help",
-     "todoist",
-     "NvimTree",
-     "peekaboo",
-     "git",
-     "TelescopePrompt",
-     "undotree",
-     "flutterToolsOutline",
-     "" -- for all buffers without a file type
-  }
-  vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile"}
-  vim.g.indent_blankline_show_trailing_blankline_indent = false -- false default
-  -- vim.g.indent_blankline_use_treesitter = true
-  -- vim.g.indent_blankline_context_patterns 
-  vim.g.indent_blankline_show_current_context = true
-  vim.g.indent_blankline_context_patterns = {
-    "class",
-    "function",
-    "method",
-    "block",
-    "list_literal",
-    "selector",
-    "^if",
-    "^table",
-    "if_statement",
-    "while",
-    "for",
-    'import_statement',
-    'labeled_statement'
-  }
--- because lazy load indent-blankline so need readd this autocmd
-  vim.cmd('autocmd CursorMoved * IndentBlanklineRefresh')
-end
-
-function config.nvim_bufferline()
-  require('bufferline').setup{
-    options = {
-      -- modified_icon = '✥',
-      buffer_close_icon = '',
-      mappings = true,
-      always_show_bufferline = false,
-    }
+      -- Text objects
+      ['o ih'] = ':<C-U>lua require"gitsigns".text_object()<CR>',
+      ['x ih'] = ':<C-U>lua require"gitsigns".text_object()<CR>'
+    },
   }
 end
 
 return config
+

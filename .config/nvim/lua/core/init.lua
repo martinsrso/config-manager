@@ -22,6 +22,7 @@ local createdir = function ()
   end
 end
 
+-- Function of disable native plugins
 local disable_distribution_plugins= function()
   vim.g.loaded_gzip              = 1
   vim.g.loaded_tar               = 1
@@ -33,7 +34,7 @@ local disable_distribution_plugins= function()
   vim.g.loaded_vimball           = 1
   vim.g.loaded_vimballPlugin     = 1
   vim.g.loaded_matchit           = 1
-  vim.g.loaded_matchparen        = 1
+  -- vim.g.loaded_matchparen        = 1
   vim.g.loaded_2html_plugin      = 1
   vim.g.loaded_logiPat           = 1
   vim.g.loaded_rrhelper          = 1
@@ -64,4 +65,3 @@ local load_core =function()
 end
 
 load_core()
-

@@ -19,3 +19,4 @@ global:load_variables()
 
 return global
 
+

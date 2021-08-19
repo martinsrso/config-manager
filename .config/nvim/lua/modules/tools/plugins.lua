@@ -2,40 +2,40 @@ local tools = {}
 local conf = require('modules.tools.config')
 
 tools['editorconfig/editorconfig-vim'] = {
-  ft = { 'go','typescript','javascript','vim','rust','zig','c','cpp', 'python' },
-  config = conf.editorconfig,
+  ft = { 'go','typescript','javascript','vim','rust','zig','c', 'cpp', 'python', 'md', 'yaml', 'yml', 'tf', 'Dockerfile' },
+  event = 'BufReadPre',
 }
 
 tools['brooth/far.vim'] = {
+  event = {'BufRead','BufNewFile'},
   cmd = {'Far','Farp'},
   config = function ()
     vim.g['far#source'] = 'rg'
   end
 }
 
-tools['iamcco/markdown-preview.nvim'] = {
-  ft = 'markdown',
-  config = function ()
-    vim.g.mkdp_auto_start = 0
-    -- vim.cmd('call mkdp#util#install()')
-  end
-}
-
-tools['b3nj5m1n/kommentary'] = {
-  event = 'BufReadPre'
-}
-
 tools['kdheepak/lazygit.nvim'] = {
+  event = {'BufRead','BufNewFile'},
   cmd = {'LazyGit'}
 }
 
 tools['akinsho/nvim-toggleterm.lua'] = {
+  event = {'BufRead','BufNewFile'},
   config = conf.toggleterm,
 }
 
 tools['windwp/nvim-autopairs'] = {
   event = 'InsertEnter',
   config = conf.autopair,
+}
+
+tools['iamcco/markdown-preview.nvim'] = {
+  ft = 'markdown',
+  config = conf.markdown_preview,
+}
+
+tools['b3nj5m1n/kommentary'] = {
+  event = 'BufReadPre'
 }
 
 return tools

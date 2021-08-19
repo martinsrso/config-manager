@@ -1,14 +1,14 @@
 local completion = {}
 local conf = require('modules.completion.config')
 
-completion['ms-jpq/coq_nvim'] = {
+--[[ completion['ms-jpq/coq_nvim'] = {
   branch = 'coq',
   event = 'BufReadPre',
-  run = ':COQdeps',
+  -- run = ':COQdeps',
   requires = {
     {'ms-jpq/coq.artifacts', branch = 'artifacts'},
   }
-}
+} ]]
 
 completion['neovim/nvim-lspconfig'] = {
   event = 'BufReadPre',
@@ -18,23 +18,29 @@ completion['neovim/nvim-lspconfig'] = {
   }
 }
 
-completion['glepnir/lspsaga.nvim'] = {
-  cmd = 'Lspsaga',
-}
-
 completion['onsails/lspkind-nvim'] = {
   event = 'InsertEnter',
-  config = conf.lspkind
+  config = conf.lspkind,
+  requires = {'mortepau/codicons.nvim'}
 }
 
---[[ completion['hrsh7th/nvim-compe'] = {
+completion['hrsh7th/nvim-compe'] = {
   event = 'InsertEnter',
   config = conf.nvim_compe,
+}
+
+--[[ completion['hrsh7th/nvim-cmp'] = {
+  -- event = 'InsertEnter',
+  config = conf.nvim_compe,
+  requires = {'hrsh7th/cmp-buffer'}
+}
+
+completion['hrsh7th/cmp-buffer'] = {
 } ]]
 
 completion['hrsh7th/vim-vsnip'] = {
   event = 'InsertCharPre',
-  -- config = conf.vim_vsnip
+  config = conf.vim_vsnip
 }
 
 completion['rafamadriz/friendly-snippets'] = {
@@ -56,33 +62,49 @@ completion['liuchengxu/vista.vim'] = {
   config = conf.vim_vista
 }
 
-completion['fatih/vim-go'] = {
-  ft = 'go',
-  -- run = ':GoInstallBinaries',
-  -- config = conf.golang,
+completion['kosayoda/nvim-lightbulb'] = {
+    event = 'BufReadPre',
+    config = function()
+        vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
+        require'nvim-lightbulb'.update_lightbulb {
+            sign = {
+                enabled = true,
+                -- Priority of the gutter sign
+                text = "💡",
+                priority = 30,
+            },
+            float = {
+                enabled = false,
+                text = "💡",
+                win_opts = {},
+            },
+            virtual_text = {
+                enabled = false,
+                text = "💡",
+            },
+            status_text = {
+                enabled = false,
+                text = "💡",
+                text_unavailable = ""
+            }
+        }
+    end
 }
 
---[[ completion['ray-x/go.nvim'] = {
+--[[ completion['fatih/vim-go'] = {
   ft = 'go',
-  -- cmd = 'GoAddAllTest, GoAddTest',
-  config = conf.golang,
+  run = ':GoInstallBinaries',
+  -- config = conf.golang,
 } ]]
 
--- completion['glepnir/smartinput.nvim'] = {
---   ft = 'go',
---   config = conf.smart_input
--- }
--- 
--- completion['mattn/vim-sonictemplate'] = {
---   cmd = 'Template',
---   ft = {'go','typescript','lua','javascript','vim','rust','markdown'},
---   config = conf.vim_sonictemplate,
--- }
-
-completion['mattn/emmet-vim'] = {
-  event = 'InsertEnter',
-  ft = {'html','css','javascript','javascriptreact','vue','typescript','typescriptreact'},
-  config = conf.emmet,
-}
+--[[ completion['ray-x/go.nvim'] = {
+  ft = 'bla',
+  -- cmd = 'GoAddAllTest, GoAddTest',
+  config = conf.golang,
+  requires = {
+    {'nvim-treesitter/nvim-treesitter', opt = true},
+    {'nvim-treesitter/nvim-treesitter-textobjects',opt = true},
+  }
+} ]]
 
 return completion

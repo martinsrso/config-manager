@@ -1,27 +1,15 @@
 local api = vim.api
 local lspconfig = require 'lspconfig'
 local global = require 'core.global'
-
-if not packer_plugins['lspsaga.nvim'].loaded then
-  vim.cmd [[packadd lspsaga.nvim]]
-end
+local format = require('modules.completion.format')
 
 if not packer_plugins['coq_nvim'].loaded then
   vim.cmd [[packadd coq_nvim]]
 end
 
---[[ if not packer_plugins['nvim-lspconfig'].loaded then
+if not packer_plugins['nvim-lspconfig'].loaded then
   vim.cmd [[packadd nvim-lspconfig]]
--- end ]]
-
-local saga = require 'lspsaga'
-saga.init_lsp_saga({
-  code_action_icon = '',
-  --[[ error_sign = '', -- 
-  warn_sign = '',
-  hint_sign = '',
-  infor_sign = '', ]]
-})
+end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -36,6 +24,8 @@ function _G.open_lsp_log()
   vim.cmd("edit " .. path)
 end
 
+-- local coq = require'coq'()
+
 vim.cmd('command! -nargs=0 LspLog call v:lua.open_lsp_log()')
 vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
 
@@ -49,18 +39,29 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
       enable = true,
       priority = 20
     },
-    -- Disable a feature
-    update_in_insert = false,
+    -- Disable a feature update_in_insert = false,
 })
 
+local enhance_attach = function(client,bufnr)
+  if client.resolved_capabilities.document_formatting then
+    format.lsp_before_save()
+  end
+  api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+end
+
 lspconfig.clangd.setup {
-  cmd = {
-    "clangd",
-    "--background-index",
-    "--suggest-missing-includes",
-    "--clang-tidy",
-    "--header-insertion=iwyu",
-  },
+  -- coq.lsp_ensure_capabilities{
+    on_attach = enhance_attach,
+    capabilities = capabilities,
+    filetypes = {'cpp'},
+    cmd = {
+      "clangd",
+      "--background-index",
+      "--suggest-missing-includes",
+      "--clang-tidy",
+      "--header-insertion=iwyu",
+    },
+  -- }
 }
 
 lspconfig.terraformls.setup{
@@ -72,24 +73,61 @@ lspconfig.terraformls.setup{
     "terraform",
     "tf"
   },
+  on_attach = enhance_attach,
+  capabilities = capabilities,
  }
 
 lspconfig.rust_analyzer.setup {
+  on_attach = enhance_attach,
   capabilities = capabilities,
 }
 
 lspconfig.yamlls.setup {
   schemas = {
     kubernetes = "globPattern"
+  },
+  on_attach = enhance_attach,
+  capabilities = capabilities,
+}
+
+lspconfig.sumneko_lua.setup {
+    cmd = {
+        global.home.."/workstation/lua-language-server/bin/macOS/lua-language-server",
+        "-E",
+        global.home.."/workstation/lua-language-server/main.lua"
+    };
+    on_attach = enhance_attach,
+    capabilities = capabilities,
+    settings = {
+        Lua = {
+            diagnostics = {
+                enable = true,
+                globals = {"vim","packer_plugins"}
+            },
+            runtime = {version = "LuaJIT"},
+            workspace = {
+                library = vim.list_extend({[vim.fn.expand("$VIMRUNTIME/lua")] = true},{}),
+            },
+        },
+    }
+}
+
+lspconfig.gopls.setup {
+  on_attach = enhance_attach,
+  capabilities = capabilities,
+  init_options = {
+    usePlaceholders=true,
+    completeUnimported=true,
   }
 }
 
 local servers = {
-  'dockerls','bashls','pyright', 'tsserver', 'jsonls', 'html', 'gopls'
+  'dockerls','bashls','pyright', 'tsserver', 'jsonls', 'html',
 }
 
 for _,server in ipairs(servers) do
   lspconfig[server].setup{
-    coq.lsp_ensure_capabilities{ on_attach = enhance_attach }
+      on_attach = enhance_attach,
+      capabilities = capabilities
   }
 end

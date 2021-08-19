@@ -18,18 +18,23 @@ function autocmd.load_autocmds()
     packer = {
       {"BufWritePost","*.lua","lua require('core.pack').auto_compile()"};
     },
+
     bufs = {
-      -- Reload vim config automatically
-      {"BufWritePost",[[$VIM_PATH/{*.vim,*.yaml,vimrc} nested source $MYVIMRC | redraw]]};
-      -- Reload Vim script automatically if setlocal autoread
-      -- {"BufWritePost,FileWritePost","*.vim", [[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]]};
-      {"BufWritePre","/tmp/*","setlocal noundofile"};
-      {"BufWritePre","COMMIT_EDITMSG","setlocal noundofile"};
-      {"BufWritePre","MERGE_MSG","setlocal noundofile"};
-      {"BufWritePre","*.tmp","setlocal noundofile"};
-      {"BufWritePre","*.bak","setlocal noundofile"};
-      {"BufWritePre","*.tsx","lua vim.api.nvim_command('Format')"};
-      -- {"BufWritePre","*.go","lua require('internal.golines').golines_format()"};
+        {'BufReadPost', '*', [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif]]};
+        -- Reload vim config automatically
+        {"BufWritePost",[[$VIM_PATH/{*.vim,*.yaml,vimrc} nested source $MYVIMRC | redraw]]};
+        -- Reload Vim script automatically if setlocal autoread
+        {"BufWritePost,FileWritePost","*.vim", [[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]]};
+        {"BufWritePre","/tmp/*","setlocal noundofile"};
+        {"BufWritePre","COMMIT_EDITMSG","setlocal noundofile"};
+        {"BufWritePre","MERGE_MSG","setlocal noundofile"};
+        {"BufWritePre","*.tmp","setlocal noundofile"};
+        {"BufWritePre","*.bak","setlocal noundofile"};
+        -- {"BufWritePre","*.tsx","lua vim.api.nvim_command('Format')"};
+        {"BufWritePre (InsertLeave?) <buffer>","*","lua vim.lsp.buf.formatting_sync(nil,500)"};
+        -- {"BufWritePre","*.go","lua require('internal.golines').golines_format()"};
+        -- {"BufWritePre", "*.go", "silent! lua require('go.format').gofmt()"};
+        -- {"BufWritePre", "*.go", "silent! lua require('go.format').goimport()"};
     };
 
     wins = {
@@ -45,7 +50,7 @@ function autocmd.load_autocmds()
     };
 
     ft = {
-      {"FileType", "dashboard", "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"};
+      -- {"FileType", "dashboard", "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"};
       {"BufNewFile,BufRead","*.toml"," setf toml"},
     };
 
