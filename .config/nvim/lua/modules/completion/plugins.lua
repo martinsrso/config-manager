@@ -1,14 +1,15 @@
 local completion = {}
+-- local vim = vim
 local conf = require('modules.completion.config')
 
---[[ completion['ms-jpq/coq_nvim'] = {
+completion['ms-jpq/coq_nvim'] = {
   branch = 'coq',
-  event = 'BufReadPre',
-  -- run = ':COQdeps',
+  config = conf.coq,
+  run = ':COQdeps',
   requires = {
     {'ms-jpq/coq.artifacts', branch = 'artifacts'},
   }
-} ]]
+}
 
 completion['neovim/nvim-lspconfig'] = {
   event = 'BufReadPre',
@@ -18,41 +19,13 @@ completion['neovim/nvim-lspconfig'] = {
   }
 }
 
-completion['onsails/lspkind-nvim'] = {
-  event = 'InsertEnter',
-  config = conf.lspkind,
-  requires = {'mortepau/codicons.nvim'}
-}
-
-completion['hrsh7th/nvim-compe'] = {
-  event = 'InsertEnter',
-  config = conf.nvim_compe,
-}
-
---[[ completion['hrsh7th/nvim-cmp'] = {
-  -- event = 'InsertEnter',
-  config = conf.nvim_compe,
-  requires = {'hrsh7th/cmp-buffer'}
-}
-
-completion['hrsh7th/cmp-buffer'] = {
-} ]]
-
-completion['hrsh7th/vim-vsnip'] = {
-  event = 'InsertCharPre',
-  config = conf.vim_vsnip
-}
-
-completion['rafamadriz/friendly-snippets'] = {
-  event = 'InsertCharPre',
-}
-
 completion['nvim-telescope/telescope.nvim'] = {
   cmd = 'Telescope',
   config = conf.telescope,
   requires = {
     {'nvim-lua/popup.nvim', opt = true},
     {'nvim-lua/plenary.nvim',opt = true},
+    {'mortepau/codicons.nvim'},
     {'nvim-telescope/telescope-fzy-native.nvim',opt = true},
   }
 }
@@ -90,21 +63,5 @@ completion['kosayoda/nvim-lightbulb'] = {
         }
     end
 }
-
---[[ completion['fatih/vim-go'] = {
-  ft = 'go',
-  run = ':GoInstallBinaries',
-  -- config = conf.golang,
-} ]]
-
---[[ completion['ray-x/go.nvim'] = {
-  ft = 'bla',
-  -- cmd = 'GoAddAllTest, GoAddTest',
-  config = conf.golang,
-  requires = {
-    {'nvim-treesitter/nvim-treesitter', opt = true},
-    {'nvim-treesitter/nvim-treesitter-textobjects',opt = true},
-  }
-} ]]
 
 return completion

@@ -24,7 +24,7 @@ function _G.open_lsp_log()
   vim.cmd("edit " .. path)
 end
 
--- local coq = require'coq'()
+local coq = require'coq'
 
 vim.cmd('command! -nargs=0 LspLog call v:lua.open_lsp_log()')
 vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
@@ -127,7 +127,9 @@ local servers = {
 
 for _,server in ipairs(servers) do
   lspconfig[server].setup{
+    coq.lsp_ensure_capabilities{
       on_attach = enhance_attach,
       capabilities = capabilities
+    }
   }
 end

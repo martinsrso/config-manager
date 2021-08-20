@@ -1,6 +1,6 @@
 local config = {}
 
-function config.nvim_tree()
+--[[ function config.nvim_tree()
   local tree_cb = require'nvim-tree.config'.nvim_tree_callback
   local icons = require "nvim-nonicons"
 
@@ -22,8 +22,7 @@ function config.nvim_tree()
         filetype = {
             'packer',
             'qf'
-        },
-        buftype = {
+        }, buftype = {
             'terminal'
         }
     }
@@ -58,7 +57,7 @@ function config.nvim_tree()
         error = icons.get('x-circle'),
       }
   }
-end
+end ]]
 
 function config.github_theme()
   require("github-theme").setup({
@@ -118,6 +117,7 @@ function config.indent_blakline()
   vim.g.indent_blankline_show_end_of_line = true
   vim.g.indent_blankline_filetype_exclude = {
     "startify",
+    "CHADtree",
     "dashboard",
     "dotooagenda",
     "log",
@@ -139,7 +139,7 @@ function config.indent_blakline()
     "flutterToolsOutline",
     "" -- for all buffers without a file type
   }
-  -- vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile", "packer", "NvimTree"}
+  vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile", "packer", "NvimTree"}
   vim.g.indent_blankline_use_treesitter = true
   vim.g.indent_blankline_show_current_context = true
   vim.cmd('autocmd CursorMoved * IndentBlanklineRefresh')

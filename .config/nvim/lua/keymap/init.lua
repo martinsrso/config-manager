@@ -6,9 +6,9 @@ local map_args = bind.map_args
 require('keymap.config')
 
 local plug_map = {
-    ["i|<CR>"]       = map_cmd([[compe#confirm(luaeval("require 'nvim-autopairs'.autopairs_cr()"))]]):with_noremap():with_expr():with_nowait(),
-    ["i|<TAB>"]      = map_cmd('v:lua.tab_complete()'):with_expr():with_silent(),
-    ["i|<S-TAB>"]    = map_cmd('v:lua.s_tab_complete()'):with_silent():with_expr(),
+    -- ["i|<CR>"]       = map_cmd([[compe#confirm(luaeval("require 'nvim-autopairs'.autopairs_cr()"))]]):with_noremap():with_expr():with_nowait(),
+    -- ["i|<TAB>"]      = map_cmd('v:lua.tab_complete()'):with_expr():with_silent(),
+    -- ["i|<S-TAB>"]    = map_cmd('v:lua.s_tab_complete()'):with_silent():with_expr(),
     ["n|gb"]             = map_cr("BufferLinePick"):with_noremap():with_silent(),
     -- Packer
     ["n|<leader>pu"]     = map_cr("PackerUpdate"):with_silent():with_noremap():with_nowait();
@@ -52,8 +52,7 @@ local plug_map = {
     ["n|;f"]      = map_cmd("<cmd>lua vim.lsp.buf.formatting()<CR>"):with_noremap():with_silent(),
 
     -- Plugin nvim-tree
-    ["n|<Leader>e"]      = map_cr('NvimTreeToggle'):with_noremap():with_silent(),
-    ["n|<Leader>F"]      = map_cr('NvimTreeFindFile'):with_noremap():with_silent(),
+    ["n|<Leader>e"]      = map_cr('CHADopen'):with_noremap():with_silent(),
     -- Plugin MarkdownPreview
     ["n|<Leader>mp"]     = map_cu('MarkdownPreview'):with_noremap():with_silent(),
     -- Plugin DadbodUI
@@ -89,8 +88,8 @@ local plug_map = {
     ["n|<Leader>fh"]     = map_cu('DashboardFindHistory'):with_noremap():with_silent(),
     ["n|<Leader>ff"]     = map_cu('DashboardFindFile'):with_noremap():with_silent(), ]]
     -- Plugin acceleratedjk
-    -- ["n|j"]              = map_cmd('v:lua.enhance_jk_move("j")'):with_silent():with_expr(),
-    -- ["n|k"]              = map_cmd('v:lua.enhance_jk_move("k")'):with_silent():with_expr(),
+    ["n|j"]              = map_cmd('v:lua.enhance_jk_move("j")'):with_silent():with_expr(),
+    ["n|k"]              = map_cmd('v:lua.enhance_jk_move("k")'):with_silent():with_expr(),
     -- Plugin Vista
     ["n|<Leader>v"]      = map_cu('Vista!!'):with_noremap():with_silent(),
     -- Plugin hrsh7th/vim-eft

@@ -4,108 +4,24 @@ function config.nvim_lsp()
     require('modules.completion.lspconfig')
 end
 
-function config.lspkind()
-    require'lspkind'.init({
-        with_text = false,
-        preset = 'codicons',
-        --[[ symbol_map = {
-            Text = "",
-            Method = "",
-            Function = "",
-            Constructor = "",
-            Field = "ﰠ",
-            Variable = "",
-            Class = "ﴯ",
-            Interface = "",
-            Module = "",
-            Property = "ﰠ",
-            Unit = "塞",
-            Value = "",
-            Enum = "",
-            Keyword = "",
-            Snippet = "",
-            Color = "",
-            File = "",
-            Reference = "",
-            Folder = "",
-            EnumMember = "",
-            Constant = "",
-            Struct = "פּ",
-            Event = "",
-            Operator = "",
-            TypeParameter = ""
-        }, ]]
-    })
-end
-
---[[ function config.nvim_compe()
-    local cmp = require"cmp"
-    cmp.setup {
-        -- You should change this example to your chosen snippet engine.
-        snippet = {
-        expand = function(args)
-            -- You must install `vim-vsnip` if you set up as same as the following.
-            vim.fn['vsnip#anonymous'](args.body)
-        end
-        },
-
-        -- You must set mapping.
-        mapping = {
-            ['<C-p>'] = cmp.mapping.prev_item(),
-            ['<C-n>'] = cmp.mapping.next_item(),
-            ['<C-d>'] = cmp.mapping.scroll(-4),
-            ['<C-f>'] = cmp.mapping.scroll(4),
-            ['<C-Space>'] = cmp.mapping.complete(),
-            ['<C-e>'] = cmp.mapping.close(),
-            ['<CR>'] = cmp.mapping.confirm({
-                behavior = cmp.ConfirmBehavior.Replace,
-                select = true,
-            })
-        },
-
-        -- You should specify your *installed* sources.
-        sources = {
-            { name = 'buffer' }
-        }
-    }
-end
- ]]
-
-function config.nvim_compe()
-    require'compe'.setup {
-        enabled = true;
-        debug = false;
-        min_length = 1;
-        preselect = 'enabled';
-        documentation = false;
-        allow_prefix_unmatch = false;
-        map_cr = true; --  map <CR> on insert mode
-        map_complete = true; -- it will auto insert `(` after select function or method item
-        source = {
-          path = true;
-          buffer = true;
-          calc = true;
-          vsnip = true;
-          nvim_lsp = true;
-          nvim_lua = true;
-          spell = true;
-          tags = true;
-          snippets_nvim = false;
-        };
+function config.coq()
+    local vim = vim
+    vim.g.coq_settings = {
+        ["auto_start"] = 'shut-up',
     }
 end
 
 function config.telescope()
-    local icons = require "nvim-nonicons"
+local icons = require "codicons"
 
-    if not packer_plugins['plenary.nvim'].loaded then
-        vim.cmd [[packadd plenary.nvim]] vim.cmd [[packadd popup.nvim]]
-        vim.cmd [[packadd telescope-fzy-native.nvim]]
-    end
+if not packer_plugins['plenary.nvim'].loaded then
+vim.cmd [[packadd plenary.nvim]] vim.cmd [[packadd popup.nvim]]
+vim.cmd [[packadd telescope-fzy-native.nvim]]
+end
 
-    require('telescope').setup {
-        defaults = {
-        prompt_prefix = icons.get('telescope') .. " ",
+require('telescope').setup {
+defaults = {
+    prompt_prefix = icons.get('telescope') .. " ",
         -- prompt_position = 'top',
         selection_caret = icons.get("arrow-right") .. " ",
         sorting_strategy = 'ascending',

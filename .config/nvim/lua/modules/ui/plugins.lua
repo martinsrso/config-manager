@@ -1,13 +1,25 @@
 local ui = {}
 local conf = require('modules.ui.config')
 
-ui['kyazdani42/nvim-tree.lua'] = {
+--[[ ui['kyazdani42/nvim-tree.lua'] = {
   cmd = {'NvimTreeToggle','NvimTreeOpen'},
   config = conf.nvim_tree,
   requires = {
     {'kyazdani42/nvim-web-devicons'},
     {'yamatsum/nvim-nonicons'},
   }
+} ]]
+
+ui['ms-jpq/chadtree'] = {
+    branch= 'chad',
+    run = ':CHADdeps',
+    config = function()
+      local vim = vim;
+      vim.g.chadtree_settings = {
+        ["keymap.primary"] = {"l", "<enter>"},
+        ["theme.text_colour_set"] = "env"
+      };
+    end
 }
 
 ui['projekt0n/github-nvim-theme'] = {
@@ -35,11 +47,11 @@ ui['lewis6991/gitsigns.nvim'] = {
   requires = {'nvim-lua/plenary.nvim',opt=true}
 }
 
-ui['mortepau/codicons.nvim'] = {
+--[[ ui['mortepau/codicons.nvim'] = {
     event = {'BufRead','BufNewFile'},
     config = function ()
         require 'codicons'.setup{}
     end
-}
+} ]]
 
 return ui
