@@ -1,30 +1,48 @@
 local ui = {}
 local conf = require('modules.ui.config')
 
---[[ ui['kyazdani42/nvim-tree.lua'] = {
+ui['kyazdani42/nvim-tree.lua'] = {
   cmd = {'NvimTreeToggle','NvimTreeOpen'},
   config = conf.nvim_tree,
   requires = {
     {'kyazdani42/nvim-web-devicons'},
-    {'yamatsum/nvim-nonicons'},
+    {'mortepau/codicons.nvim'},
+    -- {'yamatsum/nvim-nonicons'},
   }
-} ]]
+}
 
-ui['ms-jpq/chadtree'] = {
+ui['ishan9299/nvim-solarized-lua'] = {
+    config = conf.solarized
+}
+
+--[[ ui['ms-jpq/chadtree'] = {
     branch= 'chad',
     run = ':CHADdeps',
     config = function()
       local vim = vim;
       vim.g.chadtree_settings = {
         ["keymap.primary"] = {"l", "<enter>"},
-        ["theme.text_colour_set"] = "env"
+        ["theme.text_colour_set"] = "solarized_dark"
       };
     end
-}
+} ]]
 
-ui['projekt0n/github-nvim-theme'] = {
+--[[ ui["rafamadriz/neon"] = {
+    config = function ()
+        vim.cmd("colorscheme neon")
+    end
+} ]]
+
+--[[ ui['projekt0n/github-nvim-theme'] = {
     config = conf.github_theme
-}
+} ]]
+
+--[[ ui['sainnhe/sonokai'] = {
+    config = function ()
+        vim.cmd([[let g:sonokai_style = 'espresso']]
+        -- vim.cmd("colorscheme sonokai")
+    -- end
+-- } ]]
 
 ui['hoob3rt/lualine.nvim'] = {
   config = conf.lualine,
@@ -36,10 +54,10 @@ ui['akinsho/nvim-bufferline.lua'] = {
   requires = 'kyazdani42/nvim-web-devicons'
 }
 
-ui['lukas-reineke/indent-blankline.nvim'] = {
+--[[ ui['lukas-reineke/indent-blankline.nvim'] = {
   event = {'BufReadPre'},
   config = conf.indent_blankline
-}
+} ]]
 
 ui['lewis6991/gitsigns.nvim'] = {
   event = {'BufRead','BufNewFile'},

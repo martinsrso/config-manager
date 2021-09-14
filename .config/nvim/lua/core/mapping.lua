@@ -17,6 +17,9 @@ local def_map = {
     -- vnoremap <leader>d "_d
     -- Vim map
     ["n|Y"]          = map_cmd('y$'),
+    ["n|;;"]          = map_cmd('<ESC>'):with_silent():with_noremap(),
+    ["n|;q"]          = map_cmd('q'):with_silent():with_noremap(),
+    ["n|;w"]          = map_cmd('wa'):with_silent():with_noremap(),
     -- ["n|]w"]         = map_cu('WhitespaceNext'):with_noremap(),
     -- ["n|[w"]         = map_cu('WhitespacePrev'):with_noremap(),
     ["n|]b"]         = map_cu('bp'):with_noremap(),

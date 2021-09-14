@@ -48,7 +48,7 @@ local function load_options()
     splitright     = true;
     switchbuf      = "useopen";
     diffopt        = "filler,iwhite,internal,algorithm:patience";
-    completeopt    = "menuone,noselect";
+    completeopt    = "menuone,noselect,noinsert";
     jumpoptions    = "stack";
     showmode       = false;
     shortmess      = "aoOTIcF";
@@ -70,8 +70,9 @@ local function load_options()
     display        = "lastline";
     showbreak      = "↳  ";
     listchars      = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←";
-    pumblend       = 10;
-    winblend       = 10;
+    pumblend       = 5;
+    winblend       = 0;
+    wildoptions    = "pum";
   }
 
   local bw_local  = {

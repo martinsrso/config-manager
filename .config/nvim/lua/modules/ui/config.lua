@@ -1,8 +1,12 @@
 local config = {}
 
---[[ function config.nvim_tree()
+function config.solarized()
+    vim.cmd([[colorscheme NeoSolarized]])
+end
+
+function config.nvim_tree()
   local tree_cb = require'nvim-tree.config'.nvim_tree_callback
-  local icons = require "nvim-nonicons"
+  local icons = require "codicons"
 
   -- On Ready Event for Lazy Loading work
   require("nvim-tree.events").on_nvim_tree_ready(
@@ -14,8 +18,7 @@ local config = {}
     vim.g.nvim_tree_ignore = {'.git', 'vendor', '.cache'}
     vim.g.nvim_tree_side = 'right'
     vim.g.nvim_tree_hide_dotfiles = 1
-    vim.g.nvim_tree_indent_markers = 1
-    vim.g.nvim_tree_special_files = { ['README.md'] = 1, ['Makefile']= 1, ['MAKEFILE']= 1 }
+    vim.g.nvim_tree_indent_markers = 1 vim.g.nvim_tree_special_files = { ['README.md'] = 1, ['Makefile']= 1, ['MAKEFILE']= 1 }
     vim.g.nvim_tree_bindings = {
       { key = {"<CR>", "l", "o", "<2-LeftMouse>"}, cb = tree_cb("edit") }, { key = {"s"}, cb = tree_cb("split") }, { key = {"i"}, cb = tree_cb("vsplit") }, }
     vim.g.nvim_tree_window_picker_exclude = {
@@ -26,16 +29,15 @@ local config = {}
             'terminal'
         }
     }
-
     vim.g.nvim_tree_icons = {
       default = icons.get('file'),
       symlink = icons.get('file-symlink-file'),
-
       git = {
-        unstaged = icons.get('x'),
+        unstaged = icons.get('close'),
         staged = icons.get('check'),
-        unmerged = icons.get('git-merge'), renamed = icons.get('arrow-right'),
-        untracked = icons.get('square-fill'),
+        unmerged = icons.get('git-merge'),
+        renamed = icons.get('diff-renamed'),
+        untracked = icons.get('circle-filled'),
         deleted = icons.get('diff-removed'),
         ignored = icons.get('issue-draft')
       },
@@ -43,30 +45,30 @@ local config = {}
       folder = {
         arrow_open = icons.get('chevron-down'),
         arrow_closed = icons.get('chevron-right'),
-        default = icons.get('file-directory'),
-        open = icons.get('file-directory-outline'),
-        empty = icons.get('browser'),
-        empty_open = icons.get('bug'),
-        symlink = icons.get('file-submodule'),
-        symlink_open = icons.get('file-directory-outline'),
+        default = icons.get('folder'),
+        open = icons.get('folder-opened'),
+        empty = icons.get('folder'),
+        empty_open = icons.get('folder-opened'),
+        symlink = icons.get('file-symlink-directory'),
+        symlink_open = icons.get('folder-opened'),
       },
       lsp = {
-        hint = icons.get('issue-reopened'),
+        hint = icons.get('question'),
         info = icons.get('info'),
-        warning = icons.get('alert'),
-        error = icons.get('x-circle'),
+        warning = icons.get('warning'),
+        error = icons.get('error'),
       }
   }
-end ]]
+end
 
 function config.github_theme()
   require("github-theme").setup({
-    themeStyle = "dark",
+    themeStyle = "dimmed",
     sidebars = {"qf", "vista_kind", "terminal", "packer"},
     darkSidebar = true,
     commentStyle = 'italic',
     darkFloat = true,
-    colors = {bg_statusline = "#000000"}
+    -- colors = {bg_statusline = "#000000"}
   })
 end
 
@@ -75,7 +77,7 @@ function config.nvim_bufferline()
     options = {
       -- modified_icon = '✥',
       buffer_close_icon = '',
-      mappings = true,
+      -- mappings = true,
       always_show_bufferline = false,
     }
   }
@@ -84,7 +86,7 @@ end
 function config.lualine()
   require("lualine").setup {
     options = {
-      theme = "github",
+      theme = "solarized",
       section_separators = {" ", " "},
       component_separators = {"", ""},
       icons_enabled = true
@@ -96,7 +98,7 @@ function config.lualine()
       lualine_x = {"encoding", "fileformat", "filetype", require'lsp-status'.status},
       lualine_y = {"progress"},
       lualine_z = {"location"}
-  -- require'lsp-status'.status, 
+  -- require'lsp-status'.status,
     },
     inactive_sections = {
       lualine_a = {},
@@ -111,44 +113,50 @@ function config.lualine()
   }
 end
 
-function config.indent_blakline()
-  vim.g.indent_blankline_char = "│"
-  vim.g.indent_blankline_show_first_indent_level = true
-  vim.g.indent_blankline_show_end_of_line = true
-  vim.g.indent_blankline_filetype_exclude = {
-    "startify",
-    "CHADtree",
-    "dashboard",
-    "dotooagenda",
-    "log",
-    "fugitive",
-    "gitcommit",
-    "packer",
-    "vimwiki",
-    "markdown",
-    "json",
-    "txt",
-    "vista",
-    "help",
-    "todoist",
-    "NvimTree",
-    "peekaboo",
-    "git",
-    "TelescopePrompt",
-    "undotree",
-    "flutterToolsOutline",
-    "" -- for all buffers without a file type
-  }
-  vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile", "packer", "NvimTree"}
-  vim.g.indent_blankline_use_treesitter = true
-  vim.g.indent_blankline_show_current_context = true
-  vim.cmd('autocmd CursorMoved * IndentBlanklineRefresh')
+function config.indent_blankline()
+    --[[ require("indent_blankline").setup{
+        show_end_of_line = true,
+        space_char_blankline = ".",
+        show_trailing_blankline_indent = false,
+    } ]]
+    vim.g.indent_blankline_show_end_of_line = true
+    vim.g.indent_blankline_char = "│"
+    vim.g.indent_blankline_show_first_indent_level = true
+    vim.g.indent_blankline_filetype_exclude = {
+        "startify",
+        "CHADtree",
+        "dashboard",
+        "dotooagenda",
+        "log",
+        "fugitive",
+        "gitcommit",
+        "packer",
+        "vimwiki",
+        "markdown",
+        "json",
+        "txt",
+        "vista",
+        "help",
+        "todoist",
+        "NvimTree",
+        "peekaboo",
+        "git",
+        "TelescopePrompt",
+        "undotree",
+        "flutterToolsOutline",
+        "help",
+        "" -- for all buffers without a file type
+    }
+    vim.g.indent_blankline_buftype_exclude = {"terminal", "nofile", "packer", "NvimTree"}
+    -- vim.g.indent_blankline_use_treesitter = true
+    vim.g.indent_blankline_show_current_context = true
+    vim.cmd('autocmd CursorMoved * IndentBlanklineRefresh')
 end
 
 function config.gitsigns()
-  if not packer_plugins['plenary.nvim'].loaded then
-    vim.cmd [[packadd plenary.nvim]]
-  end
+    if not packer_plugins['plenary.nvim'].loaded then
+        vim.cmd [[packadd plenary.nvim]]
+    end
   require('gitsigns').setup {
     signs = {
       add = {hl = 'GitGutterAdd', text = '▋'},

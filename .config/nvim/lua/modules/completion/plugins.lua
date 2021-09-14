@@ -3,19 +3,52 @@ local completion = {}
 local conf = require('modules.completion.config')
 
 completion['ms-jpq/coq_nvim'] = {
-  branch = 'coq',
-  config = conf.coq,
-  run = ':COQdeps',
-  requires = {
-    {'ms-jpq/coq.artifacts', branch = 'artifacts'},
-  }
+    branch = 'coq',
+    config = conf.coq,
+    run = ':COQdeps',
+    requires = {
+        {'ms-jpq/coq.artifacts', branch = 'artifacts'},
+    }
+}
+
+--[[ completion["hrsh7th/nvim-cmp"] = {
+    event = 'InsertEnter',
+    config = conf.comp,
+    requires = {
+        {"hrsh7th/cmp-nvim-lsp"},
+        {"hrsh7th/cmp-buffer"}, ]]
+        -- {"hrsh7th/cmp-nvim-lua"},
+        -- {"hrsh7th/cmp-calc"},
+        -- {"hrsh7th/cmp-nvim-lua"},
+        -- {"hrsh7th/cmp-path"}, ]]
+        -- {"hrsh7th/cmp-emoji"},
+        -- {"hrsh7th/cmp-vsnip"},
+        --[[ {"hrsh7th/vim-vsnip"},
+        {"hrsh7th/vim-vsnip-integ"}, ]]
+        -- {"rafamadriz/friendly-snippets"},
+        -- {"SirVer/ultisnips"},
+            -- 'quangnguyen30192/cmp-nvim-ultisnips',
+    -- },
+-- }
+
+--[[ completion['hrsh7th/vim-vsnip'] = {
+    -- event = 'InsertCharPre',
+    config = conf.vim_vsnip,
+    requires = {
+        {"hrsh7th/vim-vsnip-integ"},
+        {"rafamadriz/friendly-snippets"},
+    }
+} ]]
+
+completion['glepnir/lspsaga.nvim'] = {
+  cmd = 'Lspsaga',
 }
 
 completion['neovim/nvim-lspconfig'] = {
   event = 'BufReadPre',
   config = conf.nvim_lsp,
   requires = {
-    {'ms-jpq/coq_nvim', opt = true},
+    {"hrsh7th/nvim-cmp"},
   }
 }
 
@@ -24,9 +57,10 @@ completion['nvim-telescope/telescope.nvim'] = {
   config = conf.telescope,
   requires = {
     {'nvim-lua/popup.nvim', opt = true},
-    {'nvim-lua/plenary.nvim',opt = true},
+    {'nvim-lua/plenary.nvim'},
     {'mortepau/codicons.nvim'},
-    {'nvim-telescope/telescope-fzy-native.nvim',opt = true},
+    {'nvim-telescope/telescope-fzy-native.nvim'},
+    {'nvim-telescope/telescope-dap.nvim'},
   }
 }
 
@@ -35,33 +69,33 @@ completion['liuchengxu/vista.vim'] = {
   config = conf.vim_vista
 }
 
-completion['kosayoda/nvim-lightbulb'] = {
-    event = 'BufReadPre',
-    config = function()
-        vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
-        require'nvim-lightbulb'.update_lightbulb {
-            sign = {
-                enabled = true,
-                -- Priority of the gutter sign
-                text = "💡",
-                priority = 30,
-            },
-            float = {
-                enabled = false,
-                text = "💡",
-                win_opts = {},
-            },
-            virtual_text = {
-                enabled = false,
-                text = "💡",
-            },
-            status_text = {
-                enabled = false,
-                text = "💡",
-                text_unavailable = ""
-            }
-        }
-    end
+completion['ray-x/go.nvim'] = {
+    ft = {'go'},
+    -- cmd = {'Goimport', 'GoAddAllTest', 'GoAlt'},
+    -- cmd = {'Goimport', 'GoAddAllTest', 'GoAlt'},
+    config = function ()
+        require('go').setup({})
+    end,
+    requires = {
+        {'mfussenegger/nvim-dap'},
+        {'rcarriga/nvim-dap-ui'},
+        {'theHamsta/nvim-dap-virtual-text'},
+    }
 }
+
+--[[ completion['fatih/vim-go'] = {
+    ft = {'go'},
+    run = ":GoUpdateBinaries",
+    event = 'BufRead',
+    config = function ()
+        vim.cmd('let g:go_diagnostics_enabled = 0')
+        vim.cmd('let g:go_metalinter_enabled = []')
+        vim.cmd('let g:go_jump_to_error = 0')
+        -- vim.cmd([[let g:go_fmt_command = ""]]
+        -- vim.cmd('let g:go_auto_sameids = 0')
+        -- vim.cmd('let g:go_code_completion_enabled = 0')
+        -- vim.cmd('let g:go_fmt_autosave = 0')
+    -- end
+-- } ]]
 
 return completion

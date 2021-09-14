@@ -3,16 +3,27 @@ local lspconfig = require 'lspconfig'
 local global = require 'core.global'
 local format = require('modules.completion.format')
 
-if not packer_plugins['coq_nvim'].loaded then
+--[[ if not packer_plugins['coq_nvim'].loaded then
   vim.cmd [[packadd coq_nvim]]
-end
+-- end ]]
 
 if not packer_plugins['nvim-lspconfig'].loaded then
   vim.cmd [[packadd nvim-lspconfig]]
 end
 
+if not packer_plugins['lspsaga.nvim'].loaded then
+  vim.cmd [[packadd lspsaga.nvim]]
+end
+
+local saga = require 'lspsaga'
+saga.init_lsp_saga({
+    code_action_icon = " ",
+    border_style = "round",
+})
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport = { properties = { 'documentation', 'detail', 'additionalTextEdits',}}
 
 function _G.reload_lsp()
   vim.lsp.stop_client(vim.lsp.get_active_clients())
@@ -24,7 +35,7 @@ function _G.open_lsp_log()
   vim.cmd("edit " .. path)
 end
 
-local coq = require'coq'
+-- local coq = require'coq'
 
 vim.cmd('command! -nargs=0 LspLog call v:lua.open_lsp_log()')
 vim.cmd('command! -nargs=0 LspRestart call v:lua.reload_lsp()')
