@@ -105,6 +105,13 @@ function config.debug()
             mode = "test",
             program = "${file}"
         },
+        {
+            type = "go",
+            name = "Stdin test", -- configuration for debugging test files
+            request = "launch",
+            program = "${file}",
+            args = {"<", "examples/operations"}
+        },
     }
 
     dap.configurations.lua = {

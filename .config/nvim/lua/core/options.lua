@@ -73,6 +73,7 @@ local function load_options()
     pumblend       = 5;
     winblend       = 0;
     wildoptions    = "pum";
+    guicursor      = "i:block";
   }
 
   local bw_local  = {
